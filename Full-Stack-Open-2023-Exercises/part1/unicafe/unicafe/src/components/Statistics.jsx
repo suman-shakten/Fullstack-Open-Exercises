@@ -1,12 +1,9 @@
 const Statistics = (props) => {
-  const {
-    good,
-    neutral,
-    bad,
-    totalFeedback,
-    averageScore,
-    positivePercentage,
-  } = props;
+  const { good, neutral, bad } = props;
+
+  const totalFeedback = good + neutral + bad;
+  const averageScore = (good + neutral * 0 + -bad) / totalFeedback || 0;
+  const positivePercentage = (good / totalFeedback) * 100 || 0;
 
   return (
     <>
