@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Statistics from './components/Statistics';
 // import FeedBack from './assets/components/FeedBack';
 // import Statistics from './assets/components/Statistics';
 
@@ -9,8 +10,8 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const totalFeedback = good + neutral + bad;
-  const averageScore = (good + neutral * 0 + -bad) / all || 0;
-  const positivePercentage = (good / all) * 100 || 0;
+  const averageScore = (good + neutral * 0 + -bad) / totalFeedback || 0;
+  const positivePercentage = (good / totalFeedback) * 100 || 0;
 
   return (
     <>
@@ -18,13 +19,14 @@ const App = () => {
       <button onClick={() => setGood(good + 1)}>good</button>
       <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
       <button onClick={() => setBad(bad + 1)}>bad</button>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {totalFeedback}</p>
-      <p>average {averageScore}</p>
-      <p>positive {positivePercentage} %</p>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        totalFeedback={totalFeedback}
+        averageScore={averageScore}
+        positivePercentage={positivePercentage}
+      />
     </>
   );
 };
