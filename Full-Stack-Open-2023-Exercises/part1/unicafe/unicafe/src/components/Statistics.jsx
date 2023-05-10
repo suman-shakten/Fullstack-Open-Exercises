@@ -10,12 +10,16 @@ const Statistics = (props) => {
   if (totalFeedback) {
     return (
       <>
-        <StatisticLine text="good" value={good} />
-        <StatisticLine text="neutral" value={neutral} />
-        <StatisticLine text="bad" value={bad} />
-        <StatisticLine text="all" value={totalFeedback} />
-        <StatisticLine text="average" value={averageScore} />
-        <StatisticLine text="positive" value={positivePercentage} />
+        <table>
+          <tr>
+            <StatisticLine text="good" value={good} />
+            <StatisticLine text="neutral" value={neutral} />
+            <StatisticLine text="bad" value={bad} />
+            <StatisticLine text="all" value={totalFeedback} />
+            <StatisticLine text="average" value={averageScore} />
+            <StatisticLine text="positive" value={`${positivePercentage} %`} />
+          </tr>
+        </table>
       </>
     );
   } else {
