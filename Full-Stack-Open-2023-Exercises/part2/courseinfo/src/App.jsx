@@ -1,6 +1,4 @@
 import Course from './components/Course';
-import Header from './components/Header';
-import Part from './components/Part';
 
 const App = () => {
   const courses = [
