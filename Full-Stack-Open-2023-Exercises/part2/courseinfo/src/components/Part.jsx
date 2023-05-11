@@ -1,6 +1,4 @@
-const Part = ({ parts }) => {
-  const { name, exercises, id } = parts;
-
+const Part = ({ name, exercises, id }) => {
   return (
     <>
       <p key={id}>

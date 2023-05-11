@@ -4,7 +4,7 @@ const Total = ({ parts }) => {
     0
   );
 
-  return <h2>total of {totalExercises} exercises</h2>;
+  return <h3>total of {totalExercises} exercises</h3>;
 };
 
 export default Total;
