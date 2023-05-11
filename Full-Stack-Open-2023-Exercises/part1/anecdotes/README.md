@@ -1,6 +1,6 @@
 # anecdotes
 
-This project contains the exercises between
+This project contains the exercises between 1.12 -1.14
 
 ## Getting Started
 
