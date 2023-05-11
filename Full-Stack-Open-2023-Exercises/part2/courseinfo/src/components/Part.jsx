@@ -1,9 +1,9 @@
-const Part = ({ part }) => {
-  const { name, exercises, id } = part;
+const Part = ({ parts }) => {
+  const { name, exercises, id } = parts;
 
   return (
     <>
-      <p key={part.id}>
+      <p key={id}>
         {name} {exercises}
       </p>
     </>

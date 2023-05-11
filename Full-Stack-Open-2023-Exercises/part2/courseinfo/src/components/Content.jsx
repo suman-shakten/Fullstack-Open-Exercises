@@ -4,11 +4,11 @@ import Total from './Total';
 const Content = ({ parts }) => {
   return (
     <>
-      <Part part={parts[0]} />
-      <Part part={parts[1]} />
-      <Part part={parts[2]} />
-      <Part part={parts[3]} />
-      <Total part={parts} />
+      <Part parts={parts[0]} />
+      <Part parts={parts[1]} />
+      <Part parts={parts[2]} />
+      <Part parts={parts[3]} />
+      <Total parts={parts} />
     </>
   );
 };
