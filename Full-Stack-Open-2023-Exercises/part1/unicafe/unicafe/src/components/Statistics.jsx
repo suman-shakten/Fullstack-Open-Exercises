@@ -11,14 +11,14 @@ const Statistics = (props) => {
     return (
       <>
         <table>
-          <tr>
+          <tbody>
             <StatisticLine text="good" value={good} />
             <StatisticLine text="neutral" value={neutral} />
             <StatisticLine text="bad" value={bad} />
             <StatisticLine text="all" value={totalFeedback} />
             <StatisticLine text="average" value={averageScore} />
             <StatisticLine text="positive" value={`${positivePercentage} %`} />
-          </tr>
+          </tbody>
         </table>
       </>
     );
