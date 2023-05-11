@@ -5,3 +5,5 @@ This is the first part of Full Stack Open Course. This part introduces us to the
 ## Table of Content
 
 - [1.1 - 1.5: courseinfo](./courseinfo)
+- [1.6 - 1.11: unicafe](./unicafe)
+- [1.12 - 1.14: anecdotes](./anecdotes)
