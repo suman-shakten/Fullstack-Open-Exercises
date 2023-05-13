@@ -33,12 +33,24 @@ const App = () => {
       personService
         .create(personObject)
         .then((returnedPerson) => {
-          setPersons(persons.concat(personObject));
+          setPersons(persons.concat(returnedPerson));
           setNewName('');
           setNewNumber('');
         })
     }
   };
+
+  const deletePerson = (personToDelete) => {
+    if (window.confirm(`Delete ${personToDelete.name}?`)) {
+      personService
+        .delete_(personToDelete.id)
+        .then(() => {
+          setPersons(persons.filter((person) =>
+            person.id !== personToDelete.id
+          ))
+        })
+    }
+  }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -74,7 +86,10 @@ const App = () => {
         addPerson={addPerson}
       />
       <h2>Numbers</h2>
-      <Persons filteredPersons={filteredPersons} />
+      <Persons
+        filteredPersons={filteredPersons}
+        deletePerson={deletePerson}
+      />
     </>
   );
 };
