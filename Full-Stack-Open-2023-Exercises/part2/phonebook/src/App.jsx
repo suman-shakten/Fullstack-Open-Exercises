@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
-import Persons from './components/Persons'
 import PersonForm from './components/PersonForm';
+import Persons from './components/Persons'
 import personService from './services/persons';
 
 
@@ -21,9 +21,31 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+    const existingPerson = persons.find((person) =>
+      person.name === newName
+    );
+    if (existingPerson) {
+      const confirmUpdate = window.confirm(
+        `${newName} is already added to the phonebook. Do you want to replace the old number with a new one?`
+      );
+      if (confirmUpdate) {
+        const updatedPerson = { ...existingPerson, number: newNumber };
 
+        personService
+          .update(existingPerson.id, updatedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== existingPerson.id ? person : returnedPerson
+              )
+            );
+            setNewName('');
+            setNewNumber('');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     } else {
       const personObject = {
         name: newName,
@@ -37,8 +59,12 @@ const App = () => {
           setNewName('');
           setNewNumber('');
         })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
+
 
   const deletePerson = (personToDelete) => {
     if (window.confirm(`Delete ${personToDelete.name}?`)) {
@@ -88,6 +114,7 @@ const App = () => {
       <h2>Numbers</h2>
       <Persons
         filteredPersons={filteredPersons}
+        persons={persons}
         deletePerson={deletePerson}
       />
     </>
