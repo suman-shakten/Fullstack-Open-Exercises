@@ -3,6 +3,7 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons'
 import personService from './services/persons';
+import Notification from './components/Notification';
 
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchName, setSearchName] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     personService
@@ -17,7 +19,7 @@ const App = () => {
       .then((initialPersons) => {
         setPersons(initialPersons)
       })
-  }, [])
+  }, [persons])
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -26,8 +28,10 @@ const App = () => {
     );
     if (existingPerson) {
       const confirmUpdate = window.confirm(
-        `${newName} is already added to the phonebook. Do you want to replace the old number with a new one?`
+        `${newName} is already added to the phonebook.
+         Do you want to replace the old number with a new one?`
       );
+
       if (confirmUpdate) {
         const updatedPerson = { ...existingPerson, number: newNumber };
 
@@ -41,9 +45,16 @@ const App = () => {
             );
             setNewName('');
             setNewNumber('');
+            setTimeout(() => {
+              setMessage(null);
+            }, 2000)
           })
           .catch((error) => {
             console.log(error);
+            setMessage({
+              text: `Information of '${existingPerson.name}' has already been removed from the server`,
+              type: 'error'
+            });
           });
       }
     } else {
@@ -58,13 +69,26 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
           setNewName('');
           setNewNumber('');
+          setMessage({
+            text: `Added '${returnedPerson.name}'`,
+            type: 'success',
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000)
         })
         .catch((error) => {
-          console.log(error);
+          setMessage({
+            text: error.response.data.error,
+            type: 'error',
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+
         });
     }
   };
-
 
   const deletePerson = (personToDelete) => {
     if (window.confirm(`Delete ${personToDelete.name}?`)) {
@@ -99,6 +123,9 @@ const App = () => {
   return (
     <>
       <h1>Phonebook</h1>
+      {message !== null && <Notification message={message} />
+      }
+
       <Filter
         searchName={searchName}
         handleSearchNameChange={handleSearchNameChange}
