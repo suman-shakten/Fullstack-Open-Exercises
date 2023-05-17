@@ -1,0 +1,11 @@
+.notification {
+    border: 2px solid green;
+}
+
+.lang-list {
+    list-style-type: disc;
+}
+
+.flag {
+    margin-top: 40px;
+}

@@ -1,11 +1,26 @@
-
+import { useState, useEffect } from 'react'
 import countryService from './services/countries';
-
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [searchCountry, setSearchCountry] = useState('');
   const [selectedCountry, setSelectedCountry] = useState();
+  const [weatherDetails, setWeatherDetails] = useState();
+
+  console.warn('weather', weatherDetails);
+  useEffect(() => {
+    if (searchCountry) {
+      const selectedCountryDetails = countries?.find((country) => {
+        return country.name.common.toLowerCase() === searchCountry.toLowerCase();
+      });
+      if (selectedCountryDetails) {
+        countryService.getWeather(...selectedCountryDetails.latlng)
+          .then((values) => {
+            setWeatherDetails(values);
+          })
+      }
+    }
+  }, [searchCountry, countries]);
 
   useEffect(() => {
     countryService
@@ -68,6 +83,18 @@ function App() {
                       alt={country.flags.alt}
                     />
                   </div>
+                  {weatherDetails && (
+                    <div>
+                      <h2>Weather in {weatherDetails.name}</h2>
+                      Weather - {weatherDetails.main.temp} &deg;F
+                      <div>
+                        <img src={`https://openweathermap.org/img/wn/${weatherDetails.weather[0].icon}@2x.png`} alt='icon' />
+                      </div>
+                      <div>
+                        wind: {weatherDetails.wind.speed} m/s
+                      </div>
+                    </div>
+                  )}
                 </div >
               )) : (
                 <ul>
